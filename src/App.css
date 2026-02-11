@@ -1,0 +1,172 @@
+/* App.css */
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.App main {
+  flex: 1;
+}
+/* =================== Global Styles =================== */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: white;
+  min-height: 100vh;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =================== Container Styles =================== */
+.main, .manage-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* =================== Card / Box =================== */
+.container, .manage-container {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.container:hover, .manage-container:hover {
+  transform: scale(1.02);
+}
+
+/* =================== Headings =================== */
+.container h2, .manage-container h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+/* =================== Inputs =================== */
+.container input, .manage-container input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.container input:focus, .manage-container input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 6px rgba(102, 126, 234, 0.4);
+}
+
+/* =================== Password Wrapper =================== */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper i {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  transition: color 0.2s;
+}
+
+.password-wrapper i:hover {
+  color: #667eea;
+}
+
+/* =================== Buttons =================== */
+button, .btn-update, .btn-primary, .btn-secondary {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #0e0e0e;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+button:hover, .btn-update:hover, .btn-primary:hover, .btn-secondary:hover {
+  background: #f1f1f4;
+  color: black;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(14, 14, 15, 0.3);
+}
+
+/* =================== Messages =================== */
+.error {
+  color: #e74c3c;
+  font-size: 13px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.message {
+  color: #27ae60;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* =================== Links =================== */
+.back-home, .toggle {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.toggle-link {
+  color: #667eea;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.toggle-link:hover {
+  color: #5a67d8;
+  text-decoration: underline;
+}
+
+/* =================== Center Box / Icon =================== */
+.center-box {
+  text-align: center;
+}
+
+.center-box .icon {
+  font-size: 50px;
+  margin-bottom: 15px;
+}
+
+/* =================== Headings =================== */
+.center-box h1 {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* =================== Framer Motion friendly =================== */
+.motion-div {
+  transition: all 0.3s ease;
+}

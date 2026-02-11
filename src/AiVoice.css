@@ -1,0 +1,132 @@
+/* Page wrapper */
+.ai-voice-container {
+  max-width: 800px;
+  margin: 100px auto;
+  padding: 30px;
+  background: #cdcbcb;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  color: #121111;
+}
+
+/* Title */
+.ai-voice-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* Textarea */
+.ai-voice-container textarea {
+  width: 100%;
+  min-height: 160px;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 15px;
+  resize: none;
+  outline: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ai-voice-container textarea:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+}
+
+/* Options */
+.options {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.options select {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease, border 0.3s ease;
+}
+
+.options select:hover {
+  background: #222;
+}
+
+/* Generate Button */
+.ai-voice-container button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  background: #545353;
+  border: 1px solid #333;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.ai-voice-container button:hover {
+  background: #111;
+  transform: translateY(-2px);
+}
+
+.ai-voice-container button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Error */
+.error {
+  margin-top: 15px;
+  color: #ff4d4d;
+  text-align: center;
+}
+
+/* Audio Player */
+.audio-player {
+  margin-top: 25px;
+  padding: 20px;
+  background: #1a1a1a;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.audio-player audio {
+  width: 100%;
+}
+
+.audio-player a {
+  color: #ffffff;
+  text-decoration: none;
+  border: 1px solid #333;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.audio-player a:hover {
+  background: #222;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .ai-voice-container {
+    margin: 60px 15px;
+    padding: 20px;
+  }
+
+  .options {
+    flex-direction: column;
+  }
+}

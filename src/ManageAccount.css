@@ -1,0 +1,132 @@
+/* ManageAccount.css */
+
+/* Basic page styling */
+.manage-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background: linear-gradient(135deg, #667eea, #764ba2); */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+}
+
+.manage-container {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.manage-container h2 {
+  margin-bottom: 25px;
+  color: #333;
+  font-weight: 700;
+  font-size: 28px;
+}
+
+.manage-container label {
+  display: block;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.manage-container input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.manage-container input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 6px rgba(102, 126, 234, 0.4);
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper i {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  transition: color 0.2s;
+}
+
+.password-wrapper i:hover {
+  color: #667eea;
+}
+
+/* Messages */
+.error {
+  color: #e74c3c;
+  font-size: 13px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.message {
+  color: #2ecc71;
+  font-size: 13px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* Buttons */
+.btn-update {
+  width: 100%;
+  padding: 12px;
+  background: #667eea;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-update:hover {
+  background: #5a67d8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(102, 126, 234, 0.3);
+}
+
+.back-home {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.back-home a {
+  text-decoration: none;
+  color: #667eea;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.back-home a:hover {
+  color: #5a67d8;
+  text-decoration: underline;
+}
+
+/* Framer Motion-friendly hover animation (optional) */
+.manage-container:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
