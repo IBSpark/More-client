@@ -83,7 +83,7 @@ export default function ManageAccount() {
       // ✅ Update stored user
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      setMessage("Account updated successfully ✅");
+      setMessage("Account updated successfully ");
       setOldPassword("");
       setNewPassword("");
     } catch (err) {

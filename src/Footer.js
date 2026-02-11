@@ -13,6 +13,7 @@ export default function Footer(){
           <Link to="/privacy policy">Privacy Policy</Link>
           <Link to="/cookie prefernce">Cookie Preferences</Link>
           <Link to="/company info">Company Info</Link>
+          <Link to = "/about">About</Link>
         </div>
       </footer>
         </>

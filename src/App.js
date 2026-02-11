@@ -8,6 +8,7 @@ import SignIn from "./SignIn";
 import AiVoice from "./AiVoice";
 import ManageAccount from "./ManageAccount";
 import FAQ from "./FAQ";
+import About from "./About";
 import Footer  from "./Footer";
 
 
@@ -96,6 +97,20 @@ function AnimatedRoutes() {
             </motion.div>
           }
         />
+        <Route
+  path="/about"
+  element={
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <About />
+    </motion.div>
+  }
+/>
+
       </Routes>
     </AnimatePresence>
   );
