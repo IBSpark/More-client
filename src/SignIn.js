@@ -14,6 +14,9 @@ export default function SignIn() {
 
   const navigate = useNavigate();
 
+  console.log("ENV:", process.env.REACT_APP_API_URL);
+
+
   const emailRegex =
     /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
