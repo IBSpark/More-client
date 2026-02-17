@@ -6,7 +6,7 @@ export default function About() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/about`)
+    fetch(`${process.env.REACT_APP_API_URL}/api/about`)
       .then(res => res.json())
       .then(data => {
         setAbout(data);
