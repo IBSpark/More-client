@@ -1,99 +1,66 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "./About.css";
 
-import React, { useEffect, useState } from "react";
-
-export default function About() {
+function About() {
   const [about, setAbout] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/about`)
-      .then(res => res.json())
-      .then(data => {
-        setAbout(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+    const fetchAbout = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/about`
+        );
+        setAbout(res.data);
+      } catch (error) {
+        console.error("Error fetching about data:", error);
+      }
+    };
+
+    fetchAbout();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (!about) return <p>No About data found</p>;
+  if (!about) return <div className="about-page">Loading...</div>;
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h1>{about.appName}</h1>
+    <div className="about-page">
+      <div className="about-wrapper">
+        <h2 className="about-heading">About {about.appName}</h2>
 
-      <img
-        src={about.imageUrl}
-        alt="About"
-        style={{ width: "300px", borderRadius: "10px" }}
-      />
+        <div className="about-content">
+          <div className="about-image">
+            {about.image && (
+              <img src={about.image} alt={about.appName} />
+            )}
+          </div>
 
-      <p>{about.description}</p>
-      <p>Version: {about.version}</p>
-      <p>Developer: {about.developer}</p>
+          <div className="about-text">
+            <p className="about-intro">{about.description}</p>
+
+            <div className="about-section">
+              <h3>Application Details</h3>
+              <ul>
+                <li><strong>Version:</strong> {about.version}</li>
+                <li><strong>Developer:</strong> {about.developer}</li>
+              </ul>
+            </div>
+
+            <div className="about-section">
+              <h3>Our Mission</h3>
+              <p>
+                We aim to deliver high-quality AI-powered solutions that
+                simplify workflows and enhance productivity for modern users.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="about-footer">
+          © {new Date().getFullYear()} {about.developer}. All Rights Reserved.
+        </div>
+      </div>
     </div>
   );
 }
 
-
-
-
-// import React from "react";
-// import { motion } from "framer-motion";
-// import "./About.css";
-
-// export default function About() {
-//   return (
-//     <motion.div
-//       className="about-page"
-//       initial={{ opacity: 0, y: 40 }}
-//       animate={{ opacity: 1, y: 0 }}
-//       transition={{ duration: 0.6 }}
-//     >
-//       <div className="about-wrapper">
-
-//         <h1 className="about-heading">About AI Voice Generator</h1>
-
-//         <div className="about-content">
-            
-
-//           <div className="about-image">
-//             <img src="/images/Ai2.jpg" alt="About AI Voice Generator" />
-//           </div>
-
-//           <div className="about-text">
-//             <p className="about-intro">
-//               AI Voice Generator is a modern web application that converts text
-//               into high-quality, natural-sounding voice using artificial
-//               intelligence technology.
-//             </p>
-
-//             <div className="about-section">
-//               <h3>Our Mission</h3>
-//               <p>
-//                 Our mission is to make voice technology simple, fast, and
-//                 accessible for everyone.
-//               </p>
-//             </div>
-
-//             <div className="about-section">
-//               <h3>What We Offer</h3>
-//               <ul>
-//                 <li>High-quality AI voice generation</li>
-//                 <li>Secure user authentication</li>
-//                 <li>Modern and responsive design</li>
-//                 <li>Fast cloud-based processing</li>
-//               </ul>
-//             </div>
-//           </div>
-
-//         </div>
-
-//         <div className="about-footer">
-//           <p>© {new Date().getFullYear()} AI Voice Generator</p>
-//         </div>
-
-//       </div>
-//     </motion.div>
-//   );
-// }
+export default About;
