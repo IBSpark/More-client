@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import './style.css';
 import './App.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import SignModal from "./SignModal"; // ✅ Added
 
 export default function Home() {
-  // Variants for the page fade-in
+
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false); // ✅ Added
+
+  // ✅ Updated Function (Login Check)
+  const handleGenerateClick = (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      navigate("/dashboard");
+    } else {
+      setShowModal(true); // ✅ Open popup instead of redirect
+    }
+  };
+
   const pageVariants = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
   };
 
-  // Variants for staggered child animations
   const childVariants = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -45,7 +61,10 @@ export default function Home() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <Link to="/signin" className="sign-in">Sign In</Link>
+          {/* ✅ Changed from Link to button */}
+          <button className="sign-in" onClick={() => setShowModal(true)}>
+            Sign In
+          </button>
         </motion.div>
       </header>
 
@@ -65,9 +84,14 @@ export default function Home() {
             <br />
             today?
           </motion.h1>
-          <Link to="/aivoice"><motion.button className="btn btn-primary" variants={childVariants}>
+
+          <motion.button
+            className="btn btn-primary"
+            variants={childVariants}
+            onClick={handleGenerateClick}
+          >
             Generate AI Voice
-          </motion.button></Link>
+          </motion.button>
 
           <motion.div variants={childVariants}>
             <Link to="/manageaccount" className="btn btn-secondary">
@@ -76,6 +100,11 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </main>
+
+      {/* ✅ Added Modal Rendering */}
+      {showModal && (
+        <SignModal onClose={() => setShowModal(false)} />
+      )}
     </motion.div>
   );
-} 
+}

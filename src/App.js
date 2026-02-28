@@ -5,13 +5,12 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import Home from "./Home";
 import SignIn from "./SignIn";
-import AiVoice from "./AiVoice";
+import Dashboard from "./Dashboard"; // ✅ added
+import AiGenerate from "./AiGenerate";
 import ManageAccount from "./ManageAccount";
 import FAQ from "./FAQ";
 import About from "./About";
-import Footer  from "./Footer";
-
-
+import Footer from "./Footer";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -19,6 +18,7 @@ function AnimatedRoutes() {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
+        
         <Route
           path="/"
           element={
@@ -32,7 +32,8 @@ function AnimatedRoutes() {
             </motion.div>
           }
         />
-         <Route
+
+        <Route
           path="/home"
           element={
             <motion.div
@@ -45,6 +46,7 @@ function AnimatedRoutes() {
             </motion.div>
           }
         />
+
         <Route
           path="/signin"
           element={
@@ -58,19 +60,22 @@ function AnimatedRoutes() {
             </motion.div>
           }
         />
+
+        {/* ✅ Dashboard Added */}
         <Route
-          path="/aivoice"
+          path="/dashboard"
           element={
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
             >
-              <AiVoice />
+              <Dashboard />
             </motion.div>
           }
         />
+
         <Route
           path="/manageaccount"
           element={
@@ -84,6 +89,7 @@ function AnimatedRoutes() {
             </motion.div>
           }
         />
+
         <Route
           path="/faq"
           element={
@@ -97,19 +103,20 @@ function AnimatedRoutes() {
             </motion.div>
           }
         />
+
         <Route
-  path="/about"
-  element={
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <About />
-    </motion.div>
-  }
-/>
+          path="/about"
+          element={
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <About />
+            </motion.div>
+          }
+        />
 
       </Routes>
     </AnimatePresence>
