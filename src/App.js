@@ -5,8 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import Home from "./Home";
 import SignIn from "./SignIn";
-import Dashboard from "./Dashboard"; // ✅ added
-import AiGenerate from "./AiGenerate";
+import Dashboard from "./Dashboard"; 
 import ManageAccount from "./ManageAccount";
 import FAQ from "./FAQ";
 import About from "./About";
