@@ -12,7 +12,11 @@ export default function SignModal({ onClose }) {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <div className="modal-icon">🎙️</div>
+        {/* <div className="modal-icon">🎙️</div> */}
+
+        <div className="modal-icon">
+           <img src="images/voicegenerator.png" alt="Logo" className="modal-logo" />
+      </div>
 
         <h2 className="modal-title">Welcome to AI Text to Voice</h2>
         <p className="modal-subtitle">

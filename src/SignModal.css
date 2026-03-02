@@ -17,11 +17,17 @@
   position: relative;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
+.modal-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
 
 .modal-icon {
   width: 70px;
   height: 70px;
-  background: black;
+  /* border: 2px solid black; */
+  /* background: black; */
   color: white;
   border-radius: 50%;
   margin: 0 auto 25px;
