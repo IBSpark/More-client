@@ -1,9 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { GoogleLogin } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";   // ✅ Add this
 import "./SignModal.css";
 
 export default function SignModal({ onClose }) {
+  const navigate = useNavigate();  // ✅ Add this
+
   return (
     <div className="modal-overlay">
       <motion.div
@@ -12,18 +15,15 @@ export default function SignModal({ onClose }) {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
       >
-        {/* <div className="modal-icon">🎙️</div> */}
-
         <div className="modal-icon">
-           <img src="images/voicegenerator.png" alt="Logo" className="modal-logo" />
-      </div>
+          <img src="images/voicegenerator.png" alt="Logo" className="modal-logo" />
+        </div>
 
         <h2 className="modal-title">Welcome to AI Text to Voice</h2>
         <p className="modal-subtitle">
           Sign in to continue generating AI voice
         </p>
 
-        {/* ✅ Google OAuth (same method as SignIn.js) */}
         <div style={{ display: "flex", justifyContent: "center" }}>
           <GoogleLogin
             onSuccess={async (credentialResponse) => {
@@ -48,12 +48,11 @@ export default function SignModal({ onClose }) {
                 }
 
                 localStorage.setItem("token", data.token);
-                localStorage.setItem(
-                  "user",
-                  JSON.stringify(data.user)
-                );
+                localStorage.setItem("user", JSON.stringify(data.user));
 
-                window.location.href = "/dashboard";
+                onClose();          // ✅ Close modal
+                navigate("/dashboard");  // ✅ Go to dashboard
+
               } catch (err) {
                 alert("Google login failed");
               }
@@ -63,14 +62,6 @@ export default function SignModal({ onClose }) {
             }}
           />
         </div>
-
-        <button className="oauth-btn apple">
-           Continue with Apple
-        </button>
-
-        <p className="terms">
-          By signing in, you agree to our Terms & Privacy Policy
-        </p>
 
         <button className="close-btn" onClick={onClose}>
           ✕
