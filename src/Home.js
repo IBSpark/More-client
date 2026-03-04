@@ -76,8 +76,15 @@ export default function Home() {
           transition={{ staggerChildren: 0.15 }}
         >
           <motion.div className="icon" variants={childVariants}>
+  <img 
+    src="/images/voicegenerator.png" 
+    alt="AI Voice Generator" 
+    className="home-icon-img"
+  />
+</motion.div>
+          {/* <motion.div className="icon" variants={childVariants}>
             🎙️
-          </motion.div>
+          </motion.div> */}
 
           <motion.h1 variants={childVariants}>
             What would you like to do
