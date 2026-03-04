@@ -118,7 +118,7 @@ export default function Dashboard() {
           animate="visible"
         >
           <img
-            src="/images/voicegenerator.png"
+            src="/images/AIIcon.png"
             alt="AI Voice Generator"
             className="dashboard-logo-img"
           />
