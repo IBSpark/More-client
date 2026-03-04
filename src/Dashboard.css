@@ -126,7 +126,7 @@
   padding: 15px;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  background:#374151;
   color: white;
   font-size: 16px;
   font-weight: 600;
@@ -134,9 +134,11 @@
   transition: 0.3s ease;
 }
 
+
 .generate-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+  color:white;
 }
 
 /* Settings Panel */
