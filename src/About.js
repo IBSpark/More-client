@@ -9,7 +9,7 @@ function About() {
     const fetchAbout = async () => {
       try {
         const res = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/auth/about`
+          `${process.env.REACT_APP_API_URL}/api/about`
         );
         setAbout(res.data);
       } catch (error) {
