@@ -1,0 +1,22 @@
+.history-page{
+padding:40px;
+}
+
+.history-card{
+background:white;
+padding:20px;
+margin-bottom:20px;
+border-radius:12px;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.history-text{
+font-weight:500;
+margin-bottom:8px;
+}
+
+.history-voice{
+font-size:14px;
+color:#6b7280;
+margin-bottom:10px;
+}

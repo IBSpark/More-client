@@ -17,13 +17,11 @@ export default function Dashboard() {
   const [audioUrl, setAudioUrl] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Logo animation
   const logoVariants = {
     hidden: { opacity: 0, y: -15 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
   };
 
-  // Auth check
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
@@ -37,7 +35,6 @@ export default function Dashboard() {
     if (!savedToken) navigate("/");
   }, [navigate]);
 
-  // Fetch voices from backend
   useEffect(() => {
     const fetchVoices = async () => {
       try {
@@ -50,6 +47,7 @@ export default function Dashboard() {
         console.error("Voice fetch error:", err);
       }
     };
+
     fetchVoices();
   }, []);
 
@@ -58,7 +56,6 @@ export default function Dashboard() {
     navigate("/");
   };
 
-  // Filter voices
   const filteredVoices = voices.filter((voice) => {
     return (
       (language === "" || voice.languageCodes.includes(language)) &&
@@ -66,7 +63,6 @@ export default function Dashboard() {
     );
   });
 
-  // Generate speech
   const handleGenerate = async () => {
     if (!text || !selectedVoice)
       return alert("Please enter text and select a voice.");
@@ -82,7 +78,7 @@ export default function Dashboard() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: localStorage.getItem("token"),
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: JSON.stringify({
             text,
@@ -98,6 +94,7 @@ export default function Dashboard() {
 
       setAudioUrl(url);
       setCredits((prev) => prev - Math.ceil(text.length / 10));
+
     } catch (err) {
       console.error(err);
       alert("Generation failed.");
@@ -126,9 +123,9 @@ export default function Dashboard() {
         </motion.div>
 
         <nav className="menu">
-          <p className="active">Home</p>
-          <p>History</p>
-          <p>Settings</p>
+          <p className="active" onClick={() => navigate("/dashboard")}>Home</p>
+          <p onClick={() => navigate("/history")}>History</p>
+          <p onClick={() => navigate("/settings")}>Settings</p>
           <p className="upgrade">Upgrade</p>
         </nav>
 
@@ -140,6 +137,7 @@ export default function Dashboard() {
       {/* MAIN CONTENT */}
       <div className="main-content">
         <div className="editor-box">
+
           <textarea
             placeholder="Start typing here or paste text to convert..."
             value={text}
@@ -151,25 +149,41 @@ export default function Dashboard() {
             <p>{text.length} / 5,000 characters</p>
           </div>
 
+          {/* Character Progress */}
+          <div className="char-progress">
+            <div
+              className="char-bar"
+              style={{ width: `${(text.length / 5000) * 100}%` }}
+            ></div>
+          </div>
+
           <button
             className="generate-btn"
             onClick={handleGenerate}
             disabled={loading}
           >
-            {loading ? "Generating..." : "Generate Speech"}
+            {loading ? <span className="loader"></span> : "Generate Speech"}
           </button>
 
           {audioUrl && (
             <div className="audio-player">
               <h4>Generated Audio</h4>
               <audio controls src={audioUrl}></audio>
+
+              <a href={audioUrl} download="ai-voice.mp3">
+                <button className="download-btn">
+                  Download
+                </button>
+              </a>
             </div>
           )}
+
         </div>
       </div>
 
       {/* SETTINGS PANEL */}
       <div className="settings-panel">
+
         <h3>Voice Settings</h3>
 
         <label>Language</label>
@@ -193,9 +207,10 @@ export default function Dashboard() {
           onChange={(e) => setSelectedVoice(e.target.value)}
         >
           <option value="">Select Voice</option>
+
           {filteredVoices.map((voice) => (
             <option key={voice.name} value={voice.name}>
-              {voice.name}
+              {voice.name} ({voice.gender})
             </option>
           ))}
         </select>
@@ -218,6 +233,7 @@ export default function Dashboard() {
           value={rate}
           onChange={(e) => setRate(e.target.value)}
         />
+
       </div>
     </div>
   );

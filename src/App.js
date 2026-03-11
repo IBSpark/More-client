@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Home from "./Home";
 import SignIn from "./SignIn";
 import Dashboard from "./Dashboard"; 
+import History from "./History"; 
 import ManageAccount from "./ManageAccount";
 import FAQ from "./FAQ";
 import About from "./About";
@@ -87,7 +88,19 @@ function AnimatedRoutes() {
             </motion.div>
           }
         />
-
+        <Route
+          path="/history"
+          element={
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <History />
+            </motion.div>
+          }
+        />
         <Route
           path="/manageaccount"
           element={

@@ -175,3 +175,69 @@
 .settings-panel select:focus {
   border-color: #6366f1;
 }
+/* Character Progress */
+
+.char-progress{
+height:6px;
+background:#e5e7eb;
+border-radius:10px;
+margin-top:8px;
+}
+
+.char-bar{
+height:6px;
+background:#6366f1;
+border-radius:10px;
+transition:width 0.3s ease;
+}
+
+
+/* Loader */
+
+.loader{
+width:18px;
+height:18px;
+border:3px solid white;
+border-top:3px solid transparent;
+border-radius:50%;
+display:inline-block;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+
+
+/* Audio Player */
+
+.audio-player{
+margin-top:25px;
+padding:15px;
+background:#f9fafb;
+border-radius:12px;
+}
+
+.audio-player h4{
+margin-bottom:10px;
+}
+
+
+/* Download button */
+
+.download-btn{
+margin-top:10px;
+padding:10px 16px;
+border:none;
+border-radius:8px;
+background:#6366f1;
+color:white;
+cursor:pointer;
+transition:0.3s;
+}
+
+.download-btn:hover{
+background:#4f46e5;
+}
