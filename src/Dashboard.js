@@ -235,11 +235,11 @@ export default function Dashboard() {
           initial="hidden"
           animate="visible"
         >
-          <img
-            // src="/images/icon.svg"
+          {/* <img
+            src="/images/icon.svg"
             alt="AI Voice"
             className="dashboard-logo-img"
-          />
+          /> */}
 
           <span className="logo-text">AI Voice</span>
 
