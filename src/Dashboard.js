@@ -236,7 +236,7 @@ export default function Dashboard() {
           animate="visible"
         >
           <img
-            src="/images/icon.svg"
+            // src="/images/icon.svg"
             alt="AI Voice"
             className="dashboard-logo-img"
           />
