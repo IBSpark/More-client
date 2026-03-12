@@ -77,7 +77,7 @@ export default function Home() {
         >
           <motion.div className="icon" variants={childVariants}>
   <img 
-    src="/images/voicegenerator.png" 
+    src="/images/icon.svg" 
     alt="AI Voice Generator" 
     className="home-icon-img"
   />

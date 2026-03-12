@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import "./Dashboard.css";
 
 export default function Dashboard() {
+
   const navigate = useNavigate();
 
   const [text, setText] = useState("");
@@ -11,18 +12,25 @@ export default function Dashboard() {
   const [language, setLanguage] = useState("");
   const [gender, setGender] = useState("");
   const [selectedVoice, setSelectedVoice] = useState("");
+
   const [pitch, setPitch] = useState(0);
   const [rate, setRate] = useState(1);
-  const [credits, setCredits] = useState(9776);
+
+  const [credits, setCredits] = useState(0);
+
   const [audioUrl, setAudioUrl] = useState("");
   const [loading, setLoading] = useState(false);
+  const [previewLoading, setPreviewLoading] = useState(false);
 
   const logoVariants = {
     hidden: { opacity: 0, y: -15 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
   };
 
+  /* ---------------- AUTH CHECK ---------------- */
+
   useEffect(() => {
+
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
 
@@ -32,29 +40,79 @@ export default function Dashboard() {
     }
 
     const savedToken = localStorage.getItem("token");
+
     if (!savedToken) navigate("/");
+
   }, [navigate]);
 
+  /* ---------------- FETCH VOICES ---------------- */
+
   useEffect(() => {
+
     const fetchVoices = async () => {
       try {
+
         const res = await fetch(
           `${process.env.REACT_APP_API_URL}/api/voices`
         );
+
         const data = await res.json();
+
         setVoices(data);
+
+        if (data.length > 0) {
+          setSelectedVoice(data[0].name);
+        }
+
       } catch (err) {
         console.error("Voice fetch error:", err);
       }
     };
 
     fetchVoices();
+
   }, []);
+
+  /* ---------------- FETCH USER CREDITS ---------------- */
+
+  useEffect(() => {
+
+    const fetchUser = async () => {
+
+      try {
+
+        const res = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/user`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        const data = await res.json();
+
+        if (data?.credits !== undefined) {
+          setCredits(data.credits);
+        }
+
+      } catch (err) {
+        console.error("User fetch error:", err);
+      }
+    };
+
+    fetchUser();
+
+  }, []);
+
+  /* ---------------- LOGOUT ---------------- */
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
   };
+
+  /* ---------------- FILTER VOICES ---------------- */
 
   const filteredVoices = voices.filter((voice) => {
     return (
@@ -63,13 +121,67 @@ export default function Dashboard() {
     );
   });
 
-  const handleGenerate = async () => {
-    if (!text || !selectedVoice)
-      return alert("Please enter text and select a voice.");
+  /* ---------------- PREVIEW VOICE ---------------- */
 
-    if (credits <= 0) return alert("No credits remaining.");
+  const handlePreview = async () => {
+
+    if (!selectedVoice) return;
 
     try {
+
+      setPreviewLoading(true);
+
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/generate`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            text: "This is a preview of the selected voice.",
+            voiceName: selectedVoice,
+            pitch,
+            rate,
+          }),
+        }
+      );
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+
+      const audio = new Audio(url);
+      audio.play();
+
+    } catch (err) {
+
+      console.error(err);
+      alert("Preview failed");
+
+    } finally {
+
+      setPreviewLoading(false);
+
+    }
+  };
+
+  /* ---------------- GENERATE VOICE ---------------- */
+
+  const handleGenerate = async () => {
+
+    if (!text || !selectedVoice) {
+      alert("Enter text and select voice.");
+      return;
+    }
+
+    if (credits <= 0) {
+      alert("No credits remaining.");
+      return;
+    }
+
+    try {
+
       setLoading(true);
 
       const res = await fetch(
@@ -93,21 +205,30 @@ export default function Dashboard() {
       const url = URL.createObjectURL(blob);
 
       setAudioUrl(url);
-      setCredits((prev) => prev - Math.ceil(text.length / 10));
+
+      setCredits(prev => prev - Math.ceil(text.length / 10));
 
     } catch (err) {
+
       console.error(err);
-      alert("Generation failed.");
+      alert("Generation failed");
+
     } finally {
+
       setLoading(false);
+
     }
   };
+
+  /* ---------------- UI ---------------- */
 
   return (
     <div className="dashboard">
 
       {/* SIDEBAR */}
+
       <div className="sidebar">
+
         <motion.div
           className="logo"
           variants={logoVariants}
@@ -115,107 +236,182 @@ export default function Dashboard() {
           animate="visible"
         >
           <img
-            src="/images/AIIcon.png"
-            alt="AI Voice Generator"
+            src="/images/icon.svg"
+            alt="AI Voice"
             className="dashboard-logo-img"
           />
+
           <span className="logo-text">AI Voice</span>
+
         </motion.div>
 
         <nav className="menu">
-          <p className="active" onClick={() => navigate("/dashboard")}>Home</p>
-          <p onClick={() => navigate("/history")}>History</p>
-          <p onClick={() => navigate("/settings")}>Settings</p>
-          <p className="upgrade">Upgrade</p>
+
+          <p className="active" onClick={() => navigate("/dashboard")}>
+            Home
+          </p>
+
+          <p onClick={() => navigate("/history")}>
+            History
+          </p>
+
+          <p onClick={() => navigate("/settings")}>
+            Settings
+          </p>
+
+          <p className="upgrade">
+            Upgrade
+          </p>
+
         </nav>
 
-        <button className="logout-btn" onClick={handleLogout}>
+        <button
+          className="logout-btn"
+          onClick={handleLogout}
+        >
           Logout
         </button>
+
       </div>
 
-      {/* MAIN CONTENT */}
+      {/* MAIN */}
+
       <div className="main-content">
+
         <div className="editor-box">
 
           <textarea
-            placeholder="Start typing here or paste text to convert..."
+            placeholder="Start typing or paste text..."
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
 
           <div className="editor-footer">
+
             <p>{credits} credits remaining</p>
-            <p>{text.length} / 5,000 characters</p>
+
+            <p>{text.length} / 5000 characters</p>
+
           </div>
 
-          {/* Character Progress */}
           <div className="char-progress">
+
             <div
               className="char-bar"
-              style={{ width: `${(text.length / 5000) * 100}%` }}
+              style={{
+                width: `${(text.length / 5000) * 100}%`
+              }}
             ></div>
+
           </div>
 
-          <button
-            className="generate-btn"
-            onClick={handleGenerate}
-            disabled={loading}
-          >
-            {loading ? <span className="loader"></span> : "Generate Speech"}
-          </button>
+          <div className="action-buttons">
+
+            <button
+              className="preview-btn"
+              onClick={handlePreview}
+              disabled={previewLoading}
+            >
+              {previewLoading ? "Previewing..." : "Preview Voice"}
+            </button>
+
+            <button
+              className="generate-btn"
+              onClick={handleGenerate}
+              disabled={loading}
+            >
+              {loading ? "Generating..." : "Generate Speech"}
+            </button>
+
+          </div>
 
           {audioUrl && (
+
             <div className="audio-player">
+
               <h4>Generated Audio</h4>
+
               <audio controls src={audioUrl}></audio>
 
-              <a href={audioUrl} download="ai-voice.mp3">
+              <a
+                href={audioUrl}
+                download="ai-voice.mp3"
+              >
+
                 <button className="download-btn">
                   Download
                 </button>
+
               </a>
+
             </div>
+
           )}
 
         </div>
+
       </div>
 
-      {/* SETTINGS PANEL */}
+      {/* SETTINGS */}
+
       <div className="settings-panel">
 
         <h3>Voice Settings</h3>
 
         <label>Language</label>
-        <select onChange={(e) => setLanguage(e.target.value)}>
+
+        <select
+          onChange={(e) => setLanguage(e.target.value)}
+        >
+
           <option value="">All</option>
+
           {[...new Set(voices.flatMap(v => v.languageCodes))].map((lang) => (
+
             <option key={lang}>{lang}</option>
+
           ))}
+
         </select>
 
         <label>Gender</label>
-        <select onChange={(e) => setGender(e.target.value)}>
+
+        <select
+          onChange={(e) => setGender(e.target.value)}
+        >
+
           <option value="">All</option>
+
           <option value="MALE">Male</option>
+
           <option value="FEMALE">Female</option>
+
         </select>
 
         <label>Voice</label>
+
         <select
           value={selectedVoice}
           onChange={(e) => setSelectedVoice(e.target.value)}
         >
-          <option value="">Select Voice</option>
 
           {filteredVoices.map((voice) => (
-            <option key={voice.name} value={voice.name}>
+
+            <option
+              key={voice.name}
+              value={voice.name}
+            >
+
               {voice.name} ({voice.gender})
+
             </option>
+
           ))}
+
         </select>
 
         <label>Pitch</label>
+
         <input
           type="range"
           min="-5"
@@ -225,6 +421,7 @@ export default function Dashboard() {
         />
 
         <label>Speaking Rate</label>
+
         <input
           type="range"
           min="0.5"
@@ -235,6 +432,7 @@ export default function Dashboard() {
         />
 
       </div>
+
     </div>
   );
 }
