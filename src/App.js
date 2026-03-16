@@ -12,6 +12,7 @@ import FAQ from "./FAQ";
 import About from "./About";
 import Footer from "./Footer";
 import SignModal from "./SignModal";
+import Pricing from "./Pricing";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -98,6 +99,19 @@ function AnimatedRoutes() {
               transition={{ duration: 0.5 }}
             >
               <History />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/pricing"
+          element={
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Pricing />
             </motion.div>
           }
         />

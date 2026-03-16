@@ -1,0 +1,29 @@
+.pricing-page{
+padding:60px;
+text-align:center;
+}
+
+.pricing-grid{
+display:flex;
+justify-content:center;
+gap:30px;
+margin-top:40px;
+}
+
+.plan{
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+width:200px;
+}
+
+.plan button{
+margin-top:15px;
+padding:10px 20px;
+border:none;
+background:#6366f1;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}

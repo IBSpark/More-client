@@ -27,7 +27,7 @@ export default function Dashboard() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
   };
 
-  /* ---------------- AUTH CHECK ---------------- */
+  /* AUTH CHECK */
 
   useEffect(() => {
 
@@ -45,17 +45,16 @@ export default function Dashboard() {
 
   }, [navigate]);
 
-  /* ---------------- FETCH VOICES ---------------- */
+
+  /* FETCH VOICES */
 
   useEffect(() => {
 
     const fetchVoices = async () => {
+
       try {
 
-        const res = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/voices`
-        );
-
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/voices`);
         const data = await res.json();
 
         setVoices(data);
@@ -67,13 +66,15 @@ export default function Dashboard() {
       } catch (err) {
         console.error("Voice fetch error:", err);
       }
+
     };
 
     fetchVoices();
 
   }, []);
 
-  /* ---------------- FETCH USER CREDITS ---------------- */
+
+  /* FETCH USER CREDITS */
 
   useEffect(() => {
 
@@ -99,20 +100,23 @@ export default function Dashboard() {
       } catch (err) {
         console.error("User fetch error:", err);
       }
+
     };
 
     fetchUser();
 
   }, []);
 
-  /* ---------------- LOGOUT ---------------- */
+
+  /* LOGOUT */
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
   };
 
-  /* ---------------- FILTER VOICES ---------------- */
+
+  /* FILTER VOICES */
 
   const filteredVoices = voices.filter((voice) => {
     return (
@@ -121,7 +125,8 @@ export default function Dashboard() {
     );
   });
 
-  /* ---------------- PREVIEW VOICE ---------------- */
+
+  /* PREVIEW VOICE */
 
   const handlePreview = async () => {
 
@@ -148,11 +153,14 @@ export default function Dashboard() {
         }
       );
 
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
+      const data = await res.json();
 
-      const audio = new Audio(url);
-      audio.play();
+      if (data.success) {
+
+        const audio = new Audio(data.audioUrl);
+        audio.play();
+
+      }
 
     } catch (err) {
 
@@ -164,14 +172,21 @@ export default function Dashboard() {
       setPreviewLoading(false);
 
     }
+
   };
 
-  /* ---------------- GENERATE VOICE ---------------- */
+
+  /* GENERATE VOICE */
 
   const handleGenerate = async () => {
 
     if (!text || !selectedVoice) {
       alert("Enter text and select voice.");
+      return;
+    }
+
+    if (text.length > 5000) {
+      alert("Text exceeds 5000 characters.");
       return;
     }
 
@@ -201,12 +216,21 @@ export default function Dashboard() {
         }
       );
 
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
+      const data = await res.json();
 
-      setAudioUrl(url);
+      if (data.success) {
 
-      setCredits(prev => prev - Math.ceil(text.length / 10));
+        setAudioUrl(data.audioUrl);
+
+        setCredits(prev =>
+          prev - Math.ceil(text.length / 10)
+        );
+
+      } else {
+
+        alert(data.message || "Generation failed");
+
+      }
 
     } catch (err) {
 
@@ -218,11 +242,14 @@ export default function Dashboard() {
       setLoading(false);
 
     }
+
   };
 
-  /* ---------------- UI ---------------- */
+
+  /* UI */
 
   return (
+
     <div className="dashboard">
 
       {/* SIDEBAR */}
@@ -235,11 +262,6 @@ export default function Dashboard() {
           initial="hidden"
           animate="visible"
         >
-          {/* <img
-            src="/images/icon.svg"
-            alt="AI Voice"
-            className="dashboard-logo-img"
-          /> */}
 
           <span className="logo-text">AI Voice</span>
 
@@ -259,7 +281,10 @@ export default function Dashboard() {
             Settings
           </p>
 
-          <p className="upgrade">
+          <p
+            className="upgrade"
+            onClick={() => navigate("/pricing")}
+          >
             Upgrade
           </p>
 
@@ -273,6 +298,7 @@ export default function Dashboard() {
         </button>
 
       </div>
+
 
       {/* MAIN */}
 
@@ -325,6 +351,7 @@ export default function Dashboard() {
 
           </div>
 
+
           {audioUrl && (
 
             <div className="audio-player">
@@ -337,11 +364,9 @@ export default function Dashboard() {
                 href={audioUrl}
                 download="ai-voice.mp3"
               >
-
                 <button className="download-btn">
                   Download
                 </button>
-
               </a>
 
             </div>
@@ -352,6 +377,7 @@ export default function Dashboard() {
 
       </div>
 
+
       {/* SETTINGS */}
 
       <div className="settings-panel">
@@ -360,9 +386,7 @@ export default function Dashboard() {
 
         <label>Language</label>
 
-        <select
-          onChange={(e) => setLanguage(e.target.value)}
-        >
+        <select onChange={(e) => setLanguage(e.target.value)}>
 
           <option value="">All</option>
 
@@ -376,9 +400,7 @@ export default function Dashboard() {
 
         <label>Gender</label>
 
-        <select
-          onChange={(e) => setGender(e.target.value)}
-        >
+        <select onChange={(e) => setGender(e.target.value)}>
 
           <option value="">All</option>
 
@@ -434,5 +456,7 @@ export default function Dashboard() {
       </div>
 
     </div>
+
   );
+
 }
